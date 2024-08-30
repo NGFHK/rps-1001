@@ -16,11 +16,16 @@ class PlayerRpsConfig:
     """A class to store the configuration of the player's Rock, Paper, Scissors gaming logic."""
 
     def __init__(
-        self, pattern: str, repeatMode: RepeatMode, configPrivacyMode: ConfigPrivacyMode
+        self,
+        pattern: str,
+        repeatMode: RepeatMode,
+        configPrivacyMode: ConfigPrivacyMode,
+        winningMessage: str = "",
     ):
         self.pattern = pattern
         self.repeatMode = repeatMode
         self.configPrivacyMode = configPrivacyMode
+        self.winningMessage = winningMessage
         self.validate()
 
     def validate(self):
@@ -28,6 +33,7 @@ class PlayerRpsConfig:
         self.validate_pattern()
         self.validate_repeat_mode()
         self.validate_privacy_mode()
+        self.validate_winning_message()
 
     def validate_pattern(self):
         """Validates the pattern string."""
@@ -52,15 +58,30 @@ class PlayerRpsConfig:
                 "Invalid privacy mode. Must be an instance of ConfigPrivacyMode Enum."
             )
 
+    def validate_winning_message(self):
+        """Validates the winning message."""
+        if not (0 <= len(self.winningMessage) <= 42):
+            raise ValueError(
+                "Winning message length must be between 0 and 42 characters."
+            )
+
 
 # Example usage:
 if __name__ == "__main__":
     try:
-        config = PlayerRpsConfig(
+        configA = PlayerRpsConfig(
             pattern="✊✋✌️✊",
             repeatMode=RepeatMode.REPEAT_WHEN_EXHAUSTED,
             configPrivacyMode=ConfigPrivacyMode.PUBLIC,
         )
-        print("Configuration is valid.")
+        print("configA is valid.")
+
+        configB = PlayerRpsConfig(
+            pattern="✊✋✌️✊",
+            repeatMode=RepeatMode.REPEAT_WHEN_EXHAUSTED,
+            configPrivacyMode=ConfigPrivacyMode.PUBLIC,
+            winningMessage="I win!",
+        )
+        print("configB is valid.")
     except ValueError as e:
         print(f"Configuration error: {e}")
