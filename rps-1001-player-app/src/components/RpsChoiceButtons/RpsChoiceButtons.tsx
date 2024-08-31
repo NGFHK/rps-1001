@@ -1,4 +1,4 @@
-import { Button, IconButton, Stack } from '@mui/material'
+import { Button, Stack } from '@mui/material'
 import { validRpsChoiceArr } from '../common/const'
 import ButtonThemeProvider from './ButtonThemeProvider'
 import BackspaceIcon from '@mui/icons-material/Backspace'
@@ -8,6 +8,9 @@ interface Props {
   inputRef: React.RefObject<HTMLInputElement>
 }
 
+/**
+ * execCommand is deprecated but there's no good workaround.
+ */
 const RpsChoiceButtons = ({ inputRef }: Props) => {
   const handleChoiceClick = (char: string) => {
     if (inputRef.current) {
@@ -34,9 +37,9 @@ const RpsChoiceButtons = ({ inputRef }: Props) => {
             {char}
           </Button>
         ))}
-        <IconButton onClick={handleDeleteClick} size="large" color="primary">
+        <Button onClick={handleDeleteClick} variant="outlined">
           <BackspaceIcon />
-        </IconButton>
+        </Button>
       </Stack>
     </ButtonThemeProvider>
   )

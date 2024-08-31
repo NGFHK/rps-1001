@@ -18,9 +18,8 @@ const ButtonThemeProvider = ({ children } : Props) => {
         },
         styleOverrides: {
           root: {
-            size: "large",
             fontSize: "large",
-            variant: "contained",
+            aspectRatio: "1 / 1",
           },
         },
       },
