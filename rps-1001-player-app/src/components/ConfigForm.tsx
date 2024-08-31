@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from "@mui/material"
+import { Button, Link, Stack, Typography } from "@mui/material"
 import { CheckboxElement, FormContainer, TextFieldElement, useForm } from "react-hook-form-mui"
 import PatternInput from "./PatternInput"
 import FieldNames, { ConfigPrivacyMode, RepeatMode } from "./ConfigValues"
@@ -42,6 +42,9 @@ function ConfigForm() {
         <Typography align="center">
             Work in process... 🚧
         </Typography>
+        <Link href="https://lih.kg/3773399" align="center" target="_blank">
+          LIHKG Thread
+        </Link>
       </Stack>
     </FormContainer>
   )
