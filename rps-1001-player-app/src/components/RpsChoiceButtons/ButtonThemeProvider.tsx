@@ -1,10 +1,15 @@
-import { createTheme, ThemeOptions } from '@mui/material/styles'
+import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material/styles'
 import { useTheme } from '@mui/material/styles'
+import React from 'react'
 
 const length = 'min(10vh, 10vw)'
 const fontSize = `calc(${length} * 0.6)`
 
-const useButtonTheme = () => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const ButtonThemeProvider = ({ children } : Props) => {
   const parentTheme = useTheme()
 
   const buttonThemeOptions: ThemeOptions = {
@@ -22,7 +27,9 @@ const useButtonTheme = () => {
     },
   }
 
-  return createTheme(parentTheme, buttonThemeOptions)
+  const buttonTheme = createTheme(parentTheme, buttonThemeOptions)
+
+  return <ThemeProvider theme={buttonTheme}>{children}</ThemeProvider>
 }
 
-export default useButtonTheme
+export default ButtonThemeProvider

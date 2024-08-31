@@ -1,6 +1,6 @@
-import { Box, Button, ThemeProvider } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { validRpsChoiceArr } from '../common/const'
-import theme from './ButtonTheme'
+import ButtonThemeProvider from './ButtonThemeProvider'
 
 interface Props {
   inputRef: React.RefObject<HTMLInputElement>
@@ -22,7 +22,7 @@ const RpsChoiceButtons = ({ inputRef }: Props) => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ButtonThemeProvider>
       <Box display="flex" justifyContent="space-around" gap="5vw">
         {validRpsChoiceArr.map((char) => (
           <Button
@@ -40,7 +40,7 @@ const RpsChoiceButtons = ({ inputRef }: Props) => {
           ⌫
         </Button>
       </Box>
-    </ThemeProvider>
+    </ButtonThemeProvider>
   )
 }
 
