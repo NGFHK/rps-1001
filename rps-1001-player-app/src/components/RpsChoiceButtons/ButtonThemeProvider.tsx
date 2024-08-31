@@ -2,15 +2,14 @@ import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material/styles'
 import { useTheme } from '@mui/material/styles'
 import React from 'react'
 
-const length = 'min(10vh, 10vw)'
-const fontSize = `calc(${length} * 0.6)`
-
 interface Props {
   children: React.ReactNode;
 }
 
 const ButtonThemeProvider = ({ children } : Props) => {
   const parentTheme = useTheme()
+  const length = 'min(6ch,max(10vh, 10vw))'
+  const fontSize = `calc(${length} * 0.6)`
 
   const buttonThemeOptions: ThemeOptions = {
     components: {

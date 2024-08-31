@@ -34,7 +34,19 @@ function App() {
           minHeight="100vh"
           gap={10}
         >
-          <Typography variant="h1">RPS-1001</Typography>
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: {
+                xs: '20vw',
+                md: '16vw',
+                lg: '13ch',
+                xl: '15ch',
+              },
+            }}
+          >
+            RPS-1001
+          </Typography>
           <ConfigForm />
         </Box>
       </Container>
