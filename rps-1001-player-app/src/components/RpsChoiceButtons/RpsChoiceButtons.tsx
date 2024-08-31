@@ -1,6 +1,8 @@
-import { Box, Button } from '@mui/material'
+import { Button, IconButton, Stack } from '@mui/material'
 import { validRpsChoiceArr } from '../common/const'
 import ButtonThemeProvider from './ButtonThemeProvider'
+import BackspaceIcon from '@mui/icons-material/Backspace'
+
 
 interface Props {
   inputRef: React.RefObject<HTMLInputElement>
@@ -23,23 +25,19 @@ const RpsChoiceButtons = ({ inputRef }: Props) => {
 
   return (
     <ButtonThemeProvider>
-      <Box display="flex" justifyContent="space-around" gap="5vw">
+      <Stack spacing={2} direction="row">
         {validRpsChoiceArr.map((char) => (
           <Button
             key={char}
             onClick={() => handleChoiceClick(char)}
-            variant="contained"
           >
             {char}
           </Button>
         ))}
-        <Button
-          variant="outlined"
-          onClick={handleDeleteClick}
-        >
-          ⌫
-        </Button>
-      </Box>
+        <IconButton onClick={handleDeleteClick} size="large" color="primary">
+          <BackspaceIcon />
+        </IconButton>
+      </Stack>
     </ButtonThemeProvider>
   )
 }

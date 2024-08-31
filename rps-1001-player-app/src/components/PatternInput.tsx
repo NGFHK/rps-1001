@@ -40,14 +40,16 @@ function PatternInput({ inputRef } : Props) {
     formContext.setValue(FieldNames.Pattern, newPattern)
   }
 
-  return (<TextFieldElement
-    name={FieldNames.Pattern}
-    label="拳序 ✋✌️✊"
-    fullWidth
-    slotProps={{ htmlInput: { pattern: "[✋✌️✊]*" } }}
-    onChange={handlePatternChange}
-    inputRef={inputRef}
-  />)
+  return (
+    <TextFieldElement
+      name={FieldNames.Pattern}
+      label="拳序 ✋✌️✊"
+      autoComplete="off"
+      slotProps={{ htmlInput: { pattern: "[✋✌️✊]*" } }}
+      onChange={handlePatternChange}
+      inputRef={inputRef}
+    />
+  )
 }
 
 export default PatternInput

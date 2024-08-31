@@ -1,4 +1,4 @@
-import { Box, Container, CssBaseline, ThemeProvider, Typography, createTheme } from '@mui/material'
+import { Container, CssBaseline, ThemeProvider, Typography, createTheme } from '@mui/material'
 import BottomAppBar from './components/BottomAppBar'
 import ConfigForm from './components/ConfigForm'
 
@@ -25,30 +25,20 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Container maxWidth="md">
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          minHeight="100vh"
-          gap={10}
-        >
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: {
-                xs: '20vw',
-                md: '16vw',
-                lg: '13ch',
-                xl: '15ch',
-              },
-            }}
-          >
-            RPS-1001
-          </Typography>
-          <ConfigForm />
-        </Box>
+      <Container maxWidth="sm"
+        sx={{
+          gap: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+        }}
+      >
+        <Typography variant="h1" fontSize='4rem'>
+          RPS-1001
+        </Typography>
+        <ConfigForm />
       </Container>
       <BottomAppBar />
     </ThemeProvider>
