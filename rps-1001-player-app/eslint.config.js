@@ -38,6 +38,7 @@ export default tseslint.config(
       "indent": ["error", 2],
       "react/prop-types": "off",
       "eol-last": ["error", "always"],
+      "no-trailing-spaces": ["error"],
     },
   },
 )

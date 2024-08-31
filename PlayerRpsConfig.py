@@ -4,7 +4,7 @@ import re
 
 class RepeatMode(Enum):
     REPEAT_WHEN_EXHAUSTED = 1
-    REPEAT_EVERY_ROUND = 2
+    REPEAT_EVERY_ROUND_OR_EXHAUSTED = 2
 
 
 class ConfigPrivacyMode(Enum):

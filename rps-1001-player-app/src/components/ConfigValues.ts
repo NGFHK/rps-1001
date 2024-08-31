@@ -1,11 +1,11 @@
 export enum RepeatMode {
-    REPEAT_WHEN_EXHAUSTED = 1,
-    REPEAT_WHEN_EXHAUSTED_AND_RESET = 2,
+    REPEAT_WHEN_EXHAUSTED = "REPEAT_WHEN_EXHAUSTED",
+    REPEAT_EVERY_ROUND_OR_EXHAUSTED = "REPEAT_EVERY_ROUND_OR_EXHAUSTED",
 }
 
 export enum ConfigPrivacyMode {
-    PUBLIC = 1,
-    PRIVATE = 2,
+    PUBLIC = "PUBLIC",
+    PRIVATE = "PRIVATE",
 }
 
 export enum FieldNames {

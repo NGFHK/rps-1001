@@ -1,7 +1,6 @@
 import { TextFieldElement, useFormContext } from "react-hook-form-mui"
 import FieldNames from "./ConfigValues"
 import type { RpsChoice } from "./common/const"
-import _ from "lodash"
 import { validRpsChoiceToCharsMap } from "./common/const"
 
 // Create a reverse lookup map for key presses
@@ -22,23 +21,35 @@ interface Props {
 function PatternInput({ inputRef } : Props) {
   const formContext = useFormContext()
 
-  const handlePatternChange = (event: { target: { value: string } }) => {
-    const inputVal: string = event.target.value
-    let newPattern = ''
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const { key, metaKey, ctrlKey, altKey, target } = event
+    const isModifierKey = metaKey || ctrlKey || altKey
+    const isNavigationKey = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Enter', 'Backspace'].includes(key)
 
-    // emoji parsing has to done manually
-    const inputValArray: string[] = _.split(inputVal, "")
+    // Ignore key presses that are modifiers or navigation-related
+    if (isModifierKey || isNavigationKey) return
 
-    for (const char of inputValArray) {
-      if (validRpsChoiceToCharsMap[char]) {
-        newPattern += char
-      }
-      else if (charToRpsChoiceMap[char]) {
-        newPattern += charToRpsChoiceMap[char]
-      }
+    event.preventDefault()
+
+    const rpsChoice = charToRpsChoiceMap[key]
+    const inputTarget = target as HTMLInputElement
+
+    const { selectionStart, selectionEnd, value } = inputTarget
+    if (rpsChoice) {
+      const start = selectionStart ?? 0
+      const end = selectionEnd ?? 0
+      const newValue = value.slice(0, start) + rpsChoice + value.slice(end)
+      inputTarget.value = newValue
+
+      const offset  = start + rpsChoice.length
+      inputTarget.setSelectionRange(offset, offset)
+      formContext.setValue(FieldNames.Pattern, newValue)
     }
-    formContext.setValue(FieldNames.Pattern, newPattern)
+    else if (validRpsChoiceToCharsMap[key]) {
+      formContext.setValue(FieldNames.Pattern, value + key)
+    }
   }
+
 
   return (
     <TextFieldElement
@@ -46,7 +57,8 @@ function PatternInput({ inputRef } : Props) {
       label="拳序 ✋✌️✊"
       autoComplete="off"
       slotProps={{ htmlInput: { pattern: "[✋✌️✊]*" } }}
-      onChange={handlePatternChange}
+      inputMode="none"
+      onKeyDown={handleKeyDown}
       inputRef={inputRef}
     />
   )
