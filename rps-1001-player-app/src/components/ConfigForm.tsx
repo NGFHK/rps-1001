@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material"
 import { FormContainer, TextFieldElement, useForm } from "react-hook-form-mui"
 import PatternInput from "./PatternInput"
 import FieldNames from "./ConfigValues"
@@ -26,6 +26,10 @@ function ConfigForm() {
           <Button variant="contained" color="secondary" fullWidth>
             複製密文
           </Button>
+
+          <Typography align="center">
+            Work in process... 🚧
+          </Typography>
         </Box>
       </FormContainer>
     </Box>
