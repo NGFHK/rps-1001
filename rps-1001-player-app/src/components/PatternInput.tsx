@@ -54,7 +54,9 @@ function PatternInput({ inputRef } : Props) {
   return (
     <TextFieldElement
       name={FieldNames.Pattern}
-      label="拳序 ✋✌️✊"
+      label="👊 拳序"
+      required
+      placeholder="✋✌️✊"
       autoComplete="off"
       slotProps={{ htmlInput: { pattern: "[✋✌️✊]*" } }}
       inputMode="none"

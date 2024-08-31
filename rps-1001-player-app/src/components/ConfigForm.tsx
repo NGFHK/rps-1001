@@ -1,10 +1,11 @@
 import { Button, Stack, Typography } from "@mui/material"
-import { FormContainer, RadioButtonGroup, TextFieldElement, useForm } from "react-hook-form-mui"
+import { FormContainer, TextFieldElement, useForm } from "react-hook-form-mui"
 import PatternInput from "./PatternInput"
 import FieldNames, { ConfigPrivacyMode, RepeatMode } from "./ConfigValues"
 import RpsChoiceButtons from "./RpsChoiceButtons/RpsChoiceButtons"
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { useRef } from "react"
+import RepeatModeInput from "./RepeatModeInput"
 
 function ConfigForm() {
   const formContext = useForm({defaultValues:{
@@ -20,25 +21,11 @@ function ConfigForm() {
       onSuccess={data => console.log(data)}
     >
       <Stack gap={2}>
-        <RadioButtonGroup
-          label="重複模式"
-          name={FieldNames.RepeatMode}
-          row
-          required
-          options={[
-            {
-              id: RepeatMode.REPEAT_WHEN_EXHAUSTED,
-              label: "窮盡後重複",
-            },
-            {
-              id: RepeatMode.REPEAT_EVERY_ROUND_OR_EXHAUSTED,
-              label: "每盤或窮盡後重複",
-            }
-          ]}
-        />
+        <RepeatModeInput />
         <TextFieldElement
           name={FieldNames.VictoryMsg}
-          label="勝利宣言"
+          label="🏆 勝利宣言"
+          placeholder="一度得生者，豈有不滅者乎？"
           autoComplete="off"
         />
         <PatternInput inputRef={patternRef} />
