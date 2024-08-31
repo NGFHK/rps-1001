@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from "@mui/material"
-import { FormContainer, TextFieldElement, useForm } from "react-hook-form-mui"
+import { CheckboxElement, FormContainer, TextFieldElement, useForm } from "react-hook-form-mui"
 import PatternInput from "./PatternInput"
 import FieldNames, { ConfigPrivacyMode, RepeatMode } from "./ConfigValues"
 import RpsChoiceButtons from "./RpsChoiceButtons/RpsChoiceButtons"
@@ -30,6 +30,11 @@ function ConfigForm() {
         />
         <PatternInput inputRef={patternRef} />
         <RpsChoiceButtons inputRef={patternRef} />
+
+        <CheckboxElement
+          label="📖 賽後公開策略"
+          name={FieldNames.ConfigPrivacyMode}
+        />
         <Button variant="contained" color="secondary" startIcon={<ContentCopyIcon />}>
             複製密文
         </Button>
