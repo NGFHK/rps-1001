@@ -25,7 +25,7 @@ class PlayerRpsConfig:
         self.pattern = pattern
         self.repeatMode = repeatMode
         self.configPrivacyMode = configPrivacyMode
-        self.winningMessage = victoryMsg
+        self.victoryMsg = victoryMsg
         self.validate()
 
     def validate(self):
@@ -33,10 +33,9 @@ class PlayerRpsConfig:
         self.validate_pattern()
         self.validate_repeat_mode()
         self.validate_privacy_mode()
-        self.validate_winning_message()
+        self.validate_victory_msg()
 
     def validate_pattern(self):
-        """Validates the pattern string."""
         if not re.fullmatch(r"[✊✋✌️]*", self.pattern):
             raise ValueError(
                 "Pattern contains invalid characters. Only ✊, ✋, ✌️ are allowed."
@@ -45,24 +44,21 @@ class PlayerRpsConfig:
             raise ValueError("Pattern length must be between 1 and 100 characters.")
 
     def validate_repeat_mode(self):
-        """Validates the repeat mode."""
         if not isinstance(self.repeatMode, RepeatMode):
             raise ValueError(
                 "Invalid repeat mode. Must be an instance of RepeatMode Enum."
             )
 
     def validate_privacy_mode(self):
-        """Validates the privacy mode."""
         if not isinstance(self.configPrivacyMode, ConfigPrivacyMode):
             raise ValueError(
                 "Invalid privacy mode. Must be an instance of ConfigPrivacyMode Enum."
             )
 
-    def validate_winning_message(self):
-        """Validates the winning message."""
-        if not (0 <= len(self.winningMessage) <= 42):
+    def validate_victory_msg(self):
+        if not (0 <= len(self.victoryMsg) <= 42):
             raise ValueError(
-                "Winning message length must be between 0 and 42 characters."
+                "Victory message length must be between 0 and 42 characters."
             )
 
 
