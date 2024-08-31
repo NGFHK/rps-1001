@@ -20,12 +20,12 @@ class PlayerRpsConfig:
         pattern: str,
         repeatMode: RepeatMode,
         configPrivacyMode: ConfigPrivacyMode,
-        winningMessage: str = "",
+        victoryMsg: str = "",
     ):
         self.pattern = pattern
         self.repeatMode = repeatMode
         self.configPrivacyMode = configPrivacyMode
-        self.winningMessage = winningMessage
+        self.winningMessage = victoryMsg
         self.validate()
 
     def validate(self):
@@ -80,7 +80,7 @@ if __name__ == "__main__":
             pattern="✊✋✌️✊",
             repeatMode=RepeatMode.REPEAT_WHEN_EXHAUSTED,
             configPrivacyMode=ConfigPrivacyMode.PUBLIC,
-            winningMessage="I win!",
+            victoryMsg="I win!",
         )
         print("configB is valid.")
     except ValueError as e:
