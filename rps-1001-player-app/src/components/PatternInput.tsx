@@ -26,7 +26,6 @@ function PatternInput({ inputRef } : Props) {
     const isModifierKey = metaKey || ctrlKey || altKey
     const isNavigationKey = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Enter', 'Backspace'].includes(key)
 
-    // Ignore key presses that are modifiers or navigation-related
     if (isModifierKey || isNavigationKey) return
 
     event.preventDefault()
@@ -48,8 +47,8 @@ function PatternInput({ inputRef } : Props) {
     else if (validRpsChoiceToCharsMap[key]) {
       formContext.setValue(FieldNames.Pattern, value + key)
     }
+    void formContext.trigger()
   }
-
 
   return (
     <TextFieldElement
@@ -58,10 +57,20 @@ function PatternInput({ inputRef } : Props) {
       required
       placeholder="✋✌️✊"
       autoComplete="off"
-      slotProps={{ htmlInput: { pattern: "[✋✌️✊]*" } }}
-      inputMode="none"
+      slotProps={{ htmlInput: { inputMode: "none" } }}
       onKeyDown={handleKeyDown}
       inputRef={inputRef}
+      rules={{
+        required: "請輸入拳序。",
+        pattern: {
+          value: /^[\u270B\u270C\u270A]*$/,
+          message: "請輸入有效的拳序。"
+        },
+        maxLength: {
+          value: 100,
+          message: "上限 100 拳。"
+        }
+      }}
     />
   )
 }
