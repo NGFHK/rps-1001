@@ -1,5 +1,5 @@
 import { TextFieldElement, useFormContext } from "react-hook-form-mui"
-import FieldNames from "./ConfigValues"
+import { FieldNames } from "./ConfigValues"
 import type { RpsChoice } from "./common/const"
 import { validRpsChoiceToCharsMap } from "./common/const"
 

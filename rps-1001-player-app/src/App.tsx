@@ -1,6 +1,7 @@
 import { Container, CssBaseline, ThemeProvider, Typography, createTheme } from '@mui/material'
 import BottomAppBar from './components/BottomAppBar'
 import ConfigForm from './components/ConfigForm'
+import { DialogsProvider } from '@toolpad/core'
 
 const darkTheme = createTheme({
   palette: {
@@ -24,23 +25,25 @@ const darkTheme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <Container maxWidth="sm"
-        sx={{
-          gap: 10,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '100vh',
-        }}
-      >
-        <Typography variant="h1" fontSize='4rem'>
+      <DialogsProvider>
+        <CssBaseline />
+        <Container maxWidth="sm"
+          sx={{
+            gap: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '100vh',
+          }}
+        >
+          <Typography variant="h1" fontSize='4rem'>
           RPS-1001
-        </Typography>
-        <ConfigForm />
-      </Container>
-      <BottomAppBar />
+          </Typography>
+          <ConfigForm />
+        </Container>
+        <BottomAppBar />
+      </DialogsProvider>
     </ThemeProvider>
   )
 }

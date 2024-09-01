@@ -1,5 +1,5 @@
 import { RadioButtonGroup } from "react-hook-form-mui"
-import FieldNames, { RepeatMode } from "./ConfigValues"
+import { FieldNames, RepeatMode } from "./ConfigValues"
 
 const RepeatModeInput = () => (
   <RadioButtonGroup

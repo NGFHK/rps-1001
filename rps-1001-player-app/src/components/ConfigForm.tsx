@@ -1,30 +1,46 @@
 import { Link, Stack, Typography } from "@mui/material"
 import { CheckboxElement, FormContainer, useForm } from "react-hook-form-mui"
 import PatternInput from "./PatternInput"
-import FieldNames, { ConfigPrivacyMode, RepeatMode } from "./ConfigValues"
+import { ConfigPrivacyMode, ConfigValues, FieldNames, RepeatMode } from "./ConfigValues"
 import RpsChoiceButtons from "./RpsChoiceButtons/RpsChoiceButtons"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import RepeatModeInput from "./RepeatModeInput"
 import CopyEncrpytedTextButton from "./CopyEncrpytedTextButton"
 import VictoryMsgInput from "./VictoryMsgInput"
+import { useDialogs } from "@toolpad/core"
+import FetchEncryptedConfigDialog from "./EncrpytedTextDialog"
+
+const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean }) => {
+  // Recommended
+  event.preventDefault()
+  // Included for legacy support, e.g. Chrome/Edge < 119
+  event.returnValue = true
+}
 
 function ConfigForm() {
-  const formContext = useForm({
+  const formContext = useForm<ConfigValues>({
     mode: 'onChange',
     defaultValues:{
       [FieldNames.RepeatMode]: RepeatMode.REPEAT_WHEN_EXHAUSTED,
       [FieldNames.ConfigPrivacyMode]: ConfigPrivacyMode.PUBLIC,
     }})
 
-  const patternRef = useRef<HTMLInputElement>(null)
+  const dialogs = useDialogs()
 
-  const handleFormSuccess = async (data: unknown) => {
-    try {
-      await navigator.clipboard.writeText(JSON.stringify(data))
-    } catch (error) {
-      console.error(error)
-    }
+  const handleFormSuccess = (data: ConfigValues) => {
+    void dialogs.open(FetchEncryptedConfigDialog, data)
   }
+
+  const isDirty = Object.keys(formContext.formState.dirtyFields).length !== 0
+  useEffect(() => {
+    if (isDirty) {
+      window.addEventListener('beforeunload', beforeUnloadHandler)
+      return
+    }
+    window.removeEventListener('beforeunload', beforeUnloadHandler)
+  }, [isDirty])
+
+  const patternRef = useRef<HTMLInputElement>(null)
 
   return (
     <FormContainer

@@ -1,5 +1,5 @@
 import { TextFieldElement } from "react-hook-form-mui"
-import FieldNames from "./ConfigValues"
+import { FieldNames } from "./ConfigValues"
 
 const VictoryMsgInput = () => (
   <TextFieldElement

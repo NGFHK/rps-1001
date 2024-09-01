@@ -15,4 +15,11 @@ export enum FieldNames {
     VictoryMsg = 'victoryMsg',
 }
 
-export default FieldNames
+export interface ConfigValues {
+    [FieldNames.Pattern]: string
+    [FieldNames.RepeatMode]: RepeatMode
+    [FieldNames.ConfigPrivacyMode]: ConfigPrivacyMode
+    [FieldNames.VictoryMsg]: string
+}
+
+export default ConfigValues
