@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import MailLockIcon from '@mui/icons-material/MailLock'
 
 const CopyEncrpytedTextButton = () => {
   return (
@@ -7,9 +7,9 @@ const CopyEncrpytedTextButton = () => {
       type="submit"
       variant="contained"
       color="secondary"
-      startIcon={<ContentCopyIcon />}
+      startIcon={<MailLockIcon />}
     >
-			複製密文
+			取得密文
     </Button>
   )
 }

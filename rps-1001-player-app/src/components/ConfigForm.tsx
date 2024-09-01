@@ -1,4 +1,4 @@
-import { Link, Stack, Typography } from "@mui/material"
+import { Link, Stack } from "@mui/material"
 import { CheckboxElement, FormContainer, useForm } from "react-hook-form-mui"
 import PatternInput from "./PatternInput"
 import { ConfigPrivacyMode, ConfigValues, FieldNames, RepeatMode } from "./ConfigValues"
@@ -11,7 +11,6 @@ import { useDialogs } from "@toolpad/core"
 import FetchEncryptedConfigDialog from "./EncrpytedTextDialog"
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean }) => {
-  // Recommended
   event.preventDefault()
   // Included for legacy support, e.g. Chrome/Edge < 119
   event.returnValue = true
@@ -54,14 +53,10 @@ function ConfigForm() {
         <PatternInput inputRef={patternRef} />
         <RpsChoiceButtons inputRef={patternRef} />
         <CheckboxElement
-          label="📖 賽後公開策略"
+          label="📖 賽後公開出拳策略"
           name={FieldNames.ConfigPrivacyMode}
         />
         <CopyEncrpytedTextButton />
-
-        <Typography align="center">
-            Work in process... 🚧
-        </Typography>
         <Link href="https://lih.kg/3773399" align="center" target="_blank">
           LIHKG Thread
         </Link>
