@@ -2,11 +2,13 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.hashes import SHA256
 import base64
+import json
+from entities.playerRpsConfig import *
 
 
 def decrypt_input(encrypted_input_base64):
     # Read the private key from alpha_private.pem
-    with open("./keys/alpha_private.pem", "rb") as key_file:
+    with open("../keys/alpha_private.pem", "rb") as key_file:
         private_key = serialization.load_pem_private_key(
             key_file.read(),
             password=None,
@@ -25,7 +27,14 @@ def decrypt_input(encrypted_input_base64):
 
     return decrypted_input
 
-# Example usage
-encrypted_input_base64 = "iIbqYdF/F9AExex17L8snbja9ZKo3U2pNlPn8DVmcOTurwctt0Qbb2qvXPwvQNSpL6FJoxlC98QGsTbbSv91jUk1LgLy4fmCbdmDpREg2bnqCj/Z43FBXTBpsux5LPgnXdrENLQ/Pc/61doZAgzMqMNNuKQ8F6S+SqPFmSvP2xp+U2xqTgkyVr5UqwoaWetgrk0bWNjr4U5vTabR/0e1g23h2nC3f4/osXkyZkBgD3x8m+X6v89padc8hAzqladDOht+NgeMSfRiPUy8YYdC2qa7Px4Lbb2vPnmhvNeKUHDQfG084C5cWLEgtahuOlMNO1LfyTmKR/dDMlHPdNbDnA=="
-decrypted_output = decrypt_input(encrypted_input_base64)
-print(decrypted_output)
+
+def decrypt_to_config(encrypted_input_base64) -> PlayerRpsConfig:
+    decrypted_raw_config = decrypt_input(encrypted_input_base64)
+    decrypted_json = json.loads(decrypted_raw_config)
+
+    repeatMode = RepeatMode[decrypted_json["repeatMode"]]
+    configPrivacyMode = ConfigPrivacyMode[decrypted_json["configPrivacyMode"]]
+    victoryMsg = decrypted_json["victoryMsg"]
+    pattern = [RpsChoice(choice) for choice in decrypted_json["pattern"]]
+
+    return PlayerRpsConfig(pattern, repeatMode, configPrivacyMode, victoryMsg)
