@@ -33,16 +33,18 @@ class Game:
         Game can always be started.
         The result is deterministic.
         """
-
+        
+        # TODO: Refactor text printing to a separate class
+        print("```md")
         print(f"有效報名人數： {len(self.players)}")
         print(f"自動首輪晉級人數： {self.numOfByePlayers}")
         print()
 
         print("# 參賽者名單\n")
         print(self.gen_player_list_str())
+        print("```")
 
-        print()
-        print("比賽開始！\n")
+        print("比賽開始！")
         self.run_tournament()
 
     def run_tournament(self):
@@ -51,27 +53,34 @@ class Game:
             return
 
         # First round
+        print("```md")
         print("# 第1輪\n")
         autoPromotedPlayers = self.players[: self.numOfByePlayers]
         roundOnePlayers = self.players[self.numOfByePlayers :]
         roundOne = Round(roundOnePlayers)
         remainingPlayers = autoPromotedPlayers + roundOne.start()
+        print("```")
 
         roundNum = 2
         while len(remainingPlayers) > 1:
+            print("```md")
             print(f"# 第{roundNum}輪\n")
             remainingPlayers = Round(remainingPlayers).start()
+            print("```")
+
             roundNum += 1
 
         winner: Player = remainingPlayers[0]
-        print(f"冠軍： {winner.genSelfAndFollowersNames()}")
-
         prettyVictoryMsgs = [f"「{msg}」" for msg in winner.genVictoryMsgs()]
+        print("```md")
+        print("# 結果")
+        print(f"冠軍： {winner.genSelfAndFollowersNames()}")
         print(f"得獎宣言: {'、'.join(prettyVictoryMsgs)}")
+        print("```")
 
     def gen_player_list_str(self):
         playerInfoRows = [
-            " - "
+            "- "
             f"{'#' + str(player.configMsgNum):{5}} "
             f"{player.userNickname}#{player.userId}"
             f"{" " + BYE_TEXT if i < self.numOfByePlayers else ''}"
@@ -87,8 +96,8 @@ def isPowerOfTwo(n):
 class Round:
     def __init__(self, players: list[Player]):
         self.players = players
-        if not isPowerOfTwo(len(players)):
-            raise ValueError("Number of players must be a power of 2.")
+        if len(players) % 2 != 0:
+            raise ValueError("Number of players must be divisible by 2.")
 
     def start(self) -> list:
         promotingPlayers = []
@@ -99,7 +108,7 @@ class Round:
         ]
         for playerA, playerB in pairs:
             print(
-                f"{playerA.genSelfAndFollowersNames()} 🤜 🤛 {playerB.genSelfAndFollowersNames()}"
+                f"**{playerA.genSelfAndFollowersNames()} 對 {playerB.genSelfAndFollowersNames()}**"
             )
             result = playerA.fightWith(playerB)
 
@@ -114,6 +123,5 @@ class Round:
                     playerA.addFollowers(playerB)
                     promotingPlayers.append(playerA)
                     print(f"平手。{playerA.genSelfAndFollowersNames()} 同時晉級。")
-            print("---")
 
         return promotingPlayers

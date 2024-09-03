@@ -6,10 +6,10 @@ import requests
 import re
 
 from entities.player import Player
-import rpsConfigDecrpytor
+from rpsConfigDecrpytor import RpsConfigDecrpytor
 
 BASE_URL = "https://lihkg.com/api_v2/thread"
-
+PRIVATE_KEY_PATH = "../keys/alpha_private.pem"
 
 class LihkgParser:
     def __init__(
@@ -20,6 +20,7 @@ class LihkgParser:
         self.endMsgNum = endMsgNum
         self.startingPage = self.calStartingPage(beginMsgNum)
         self.readingPage = self.startingPage
+        self.decrpytor = RpsConfigDecrpytor(PRIVATE_KEY_PATH)
 
     def calStartingPage(self, beginMsgNum: int) -> int:
         return beginMsgNum // 26 + 1
@@ -55,8 +56,10 @@ class LihkgParser:
                 encryptedMsg = matches[-1]
                 config = None
                 try:
-                    config = rpsConfigDecrpytor.decrypt_to_config(encryptedMsg)
-                except:
+                    config = self.decrpytor.decrypt_to_config(encryptedMsg)
+                except Exception as e:
+                    print(f"Failed to decrypt message: {encryptedMsg}")
+                    print(e)
                     continue
 
                 msgNum = item["msg_num"]

@@ -35,9 +35,9 @@ class RpsChoice(Enum):
 
     def __str__(self):
         return {
-            RpsChoice.ROCK: "✊",
-            RpsChoice.PAPER: "✋",
-            RpsChoice.SCISSORS: "✌️",
+            RpsChoice.ROCK: "👊🏻",
+            RpsChoice.PAPER: "🖐🏻",
+            RpsChoice.SCISSORS: "✌🏻",
         }[self]
 
 
