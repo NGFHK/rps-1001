@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react"
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
@@ -66,10 +67,11 @@ const FetchEncryptedConfigDialog = ({ payload, open, onClose }: DialogProps<Conf
     <Dialog fullWidth open={open} onClose={closeDialog} closeAfterTransition={false}>
       <DialogTitle>參賽密文</DialogTitle>
       <DialogContent>
-        <Stack gap={4}>
+        <Stack gap={2}>
           <Typography>請自行複製密文，並於相關主題使用。</Typography>
+          <Alert severity="warning">注意：請勿自行插入會員加密；移除<code>```</code>標記、或更改任何格式。</Alert>
           <TextField
-            fullWidth multiline rows={4} value={textForCopy}
+            fullWidth multiline rows={8} value={textForCopy}
             contentEditable={false}
             slotProps={{ htmlInput: { inputMode: "none" } }}
           />
