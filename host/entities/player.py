@@ -72,7 +72,7 @@ class Player:
         if not self.followers:
             return self.userNickname
 
-        return f"{self.userNickname} ({', '.join([follower.userNickname for follower in self.followers])})"
+        return f"{self.userNickname} （👪：{', '.join([follower.userNickname for follower in self.followers])}）"
 
     def genVictoryMsgs(self):
         return [self.config.victoryMsg] + [

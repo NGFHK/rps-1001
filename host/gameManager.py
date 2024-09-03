@@ -4,7 +4,17 @@ from randomPlayerGenerator import genPlayer
 
 class GameManager:
     def startGame(self, players):
-        self.game = Game(players)
+        # to remove duplicated players
+        actualPlayers = []
+        seenIds = set()
+        for player in players[::-1]:
+            if player.userId not in seenIds:
+                actualPlayers.append(player)
+                seenIds.add(player.userId)
+
+        actualPlayers = actualPlayers[::-1]
+
+        self.game = Game(actualPlayers)
         self.game.start()
 
     def startEmulatedGame(self, numPlayers):

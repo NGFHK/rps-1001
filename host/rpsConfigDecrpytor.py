@@ -41,7 +41,7 @@ class RpsConfigDecrpytor:
             # the bug has fixed, but we still need to handle True/False.
             configPrivacyMode = ConfigPrivacyMode.PUBLIC if decryptedJson["configPrivacyMode"] == True else ConfigPrivacyMode.PRIVATE
 
-        victoryMsg = decryptedJson["victoryMsg"]
+        victoryMsg = decryptedJson.get("victoryMsg") or ""
         pattern = [RpsChoice(choice) for choice in decryptedJson["pattern"]]
 
         return PlayerRpsConfig(pattern, repeatMode, configPrivacyMode, victoryMsg)

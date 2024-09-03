@@ -73,7 +73,7 @@ class Game:
         winner: Player = remainingPlayers[0]
         prettyVictoryMsgs = [f"「{msg}」" for msg in winner.genVictoryMsgs()]
         print("```md")
-        print("# 結果")
+        print("# 結果\n")
         print(f"冠軍： {winner.genSelfAndFollowersNames()}")
         print(f"得獎宣言: {'、'.join(prettyVictoryMsgs)}")
         print("```")

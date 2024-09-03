@@ -11,6 +11,7 @@ from rpsConfigDecrpytor import RpsConfigDecrpytor
 BASE_URL = "https://lihkg.com/api_v2/thread"
 PRIVATE_KEY_PATH = "../keys/alpha_private.pem"
 
+
 class LihkgParser:
     def __init__(
         self, threadId: int, beginMsgNum: int = 2, endMsgNum: int = None
@@ -46,6 +47,10 @@ class LihkgParser:
                 if '<pre><code data-type="">' not in msg:
                     continue
 
+                msgNum = item["msg_num"]
+                userNickname = item["user_nickname"]
+                userId = item["user"]["user_id"]
+
                 # parse msg by using regex to find the text between <pre><code data-type="">...</code></pre>
                 pattern = r'<pre><code data-type="">(.*?)</code></pre>'
                 matches = re.findall(pattern, msg, re.DOTALL)
@@ -59,12 +64,9 @@ class LihkgParser:
                     config = self.decrpytor.decrypt_to_config(encryptedMsg)
                 except Exception as e:
                     print(f"Failed to decrypt message: {encryptedMsg}")
+                    print(f"msgNum: #{msgNum}")
                     print(e)
                     continue
-
-                msgNum = item["msg_num"]
-                userNickname = item["user_nickname"]
-                userId = item["user"]["user_id"]
 
                 player = Player(userId, userNickname, msgNum, config)
                 players.append(player)
