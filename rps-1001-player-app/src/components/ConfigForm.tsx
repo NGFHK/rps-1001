@@ -1,14 +1,15 @@
 import { Link, Stack } from "@mui/material"
 import { CheckboxElement, FormContainer, useForm } from "react-hook-form-mui"
 import PatternInput from "./PatternInput"
-import { ConfigPrivacyMode, ConfigValues, FieldNames, RepeatMode } from "./ConfigValues"
+import { ConfigFormValues, ConfigPrivacyMode, ConfigValues, FieldNames, RepeatMode } from "./ConfigValues"
 import RpsChoiceButtons from "./RpsChoiceButtons/RpsChoiceButtons"
 import { useEffect, useRef } from "react"
 import RepeatModeInput from "./RepeatModeInput"
 import CopyEncrpytedTextButton from "./CopyEncrpytedTextButton"
 import VictoryMsgInput from "./VictoryMsgInput"
 import { useDialogs } from "@toolpad/core"
-import FetchEncryptedConfigDialog from "./EncrpytedTextDialog"
+import FetchEncryptedConfigDialog from "./FetchEncryptedConfigDialog"
+import _ from "lodash"
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean }) => {
   event.preventDefault()
@@ -17,17 +18,20 @@ const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: b
 }
 
 function ConfigForm() {
-  const formContext = useForm<ConfigValues>({
+  const formContext = useForm<ConfigFormValues>({
     mode: 'onChange',
     defaultValues:{
       [FieldNames.RepeatMode]: RepeatMode.REPEAT_WHEN_EXHAUSTED,
       [FieldNames.ConfigPrivacyMode]: ConfigPrivacyMode.PUBLIC,
+      [FieldNames.ConfigPrivacyModeCheckbox]: true,
     }})
 
   const dialogs = useDialogs()
 
   const handleFormSuccess = (data: ConfigValues) => {
-    void dialogs.open(FetchEncryptedConfigDialog, data)
+    const encrpytingFields = _.omit(data, FieldNames.ConfigPrivacyModeCheckbox)
+    void dialogs.open(FetchEncryptedConfigDialog, encrpytingFields)
+    console.log(encrpytingFields)
   }
 
   const isDirty = Object.keys(formContext.formState.dirtyFields).length !== 0
@@ -38,6 +42,15 @@ function ConfigForm() {
     }
     window.removeEventListener('beforeunload', beforeUnloadHandler)
   }, [isDirty])
+
+  // See ConfigValues.ts for why we need this virtual field
+  const handlePrivacyModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked
+    formContext.setValue(
+      FieldNames.ConfigPrivacyMode,
+      checked ? ConfigPrivacyMode.PUBLIC : ConfigPrivacyMode.PRIVATE
+    )
+  }
 
   const patternRef = useRef<HTMLInputElement>(null)
 
@@ -54,7 +67,8 @@ function ConfigForm() {
         <RpsChoiceButtons inputRef={patternRef} />
         <CheckboxElement
           label="📖 賽後公開出拳策略"
-          name={FieldNames.ConfigPrivacyMode}
+          name={FieldNames.ConfigPrivacyModeCheckbox}
+          onChange={handlePrivacyModeChange}
         />
         <CopyEncrpytedTextButton />
         <Link href="https://lih.kg/3773399" align="center" target="_blank">
