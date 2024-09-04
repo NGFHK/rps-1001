@@ -1,7 +1,8 @@
-import { Container, CssBaseline, ThemeProvider, Typography, createTheme } from '@mui/material'
+import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material'
 import BottomAppBar from './components/BottomAppBar'
 import ConfigForm from './components/ConfigForm'
 import { DialogsProvider } from '@toolpad/core'
+import TitleText from './components/TitleText'
 
 const darkTheme = createTheme({
   palette: {
@@ -37,9 +38,7 @@ function App() {
             minHeight: '100vh',
           }}
         >
-          <Typography variant="h1" fontSize='4rem'>
-          RPS-1001
-          </Typography>
+          <TitleText />
           <ConfigForm />
         </Container>
         <BottomAppBar />
