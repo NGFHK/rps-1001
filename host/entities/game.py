@@ -122,6 +122,6 @@ class Round:
                 case GameResult.DRAW:
                     playerA.addFollowers(playerB)
                     promotingPlayers.append(playerA)
-                    print(f"平手。{playerA.genSelfAndFollowersNames()} 同時晉級。")
+                    print(f"無限平手。{playerA.genSelfAndFollowersNames()} 同時晉級。")
 
         return promotingPlayers
