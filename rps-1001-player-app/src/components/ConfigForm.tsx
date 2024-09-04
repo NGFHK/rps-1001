@@ -8,7 +8,7 @@ import RepeatModeInput from "./RepeatModeInput"
 import CopyEncrpytedTextButton from "./CopyEncrpytedTextButton"
 import VictoryMsgInput from "./VictoryMsgInput"
 import { useDialogs } from "@toolpad/core"
-import FetchEncryptedConfigDialog from "./FetchEncryptedConfigDialog"
+import EncryptedConfigDialog from "./EncryptedConfigDialog"
 import _ from "lodash"
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean }) => {
@@ -30,7 +30,7 @@ function ConfigForm() {
 
   const handleFormSuccess = (data: ConfigValues) => {
     const encrpytingFields = _.omit(data, FieldNames.ConfigPrivacyModeCheckbox)
-    void dialogs.open(FetchEncryptedConfigDialog, encrpytingFields)
+    void dialogs.open(EncryptedConfigDialog, encrpytingFields)
     console.log(encrpytingFields)
   }
 

@@ -16,7 +16,7 @@ import importRsaKey from "../utils/importRsaKey"
 import encryptPayload from "../utils/encryptToBase64"
 import { ConfigValues, FieldNames } from "./ConfigValues"
 
-const FetchEncryptedConfigDialog = ({ payload, open, onClose }: DialogProps<ConfigValues>) => {
+const EncryptedConfigDialog = ({ payload, open, onClose }: DialogProps<ConfigValues>) => {
   const [encryptedConfig, setEncryptedConfig] = useState<string>("")
   const rsaPubKey = useMemo(() => {
     try{
@@ -85,4 +85,4 @@ const FetchEncryptedConfigDialog = ({ payload, open, onClose }: DialogProps<Conf
   )
 }
 
-export default FetchEncryptedConfigDialog
+export default EncryptedConfigDialog
