@@ -11,12 +11,14 @@ import {
   Typography,
 } from "@mui/material"
 import { DialogProps } from "@toolpad/core"
+import { useDialogs } from '@toolpad/core'
 import defaultPubString from "../assets/default_pub.txt?raw"
 import importRsaKey from "../utils/importRsaKey"
 import encryptPayload from "../utils/encryptToBase64"
 import { ConfigValues, FieldNames } from "./ConfigValues"
 
 const EncryptedConfigDialog = ({ payload, open, onClose }: DialogProps<ConfigValues>) => {
+  const dialogs = useDialogs()
   const [encryptedConfig, setEncryptedConfig] = useState<string>("")
   const rsaPubKey = useMemo(() => {
     try{
@@ -56,7 +58,15 @@ const EncryptedConfigDialog = ({ payload, open, onClose }: DialogProps<ConfigVal
 
   const closeDialog = () => void onClose()
 
-  const handleSelectAll = () => {
+  const handleCopy = async () => {
+    const confirmed = await dialogs.confirm("確定要複製密文？\n此舉將覆蓋你剪貼簿之內容。", {okText: "複製"})
+    if (!confirmed) return
+
+    selectAll()
+    document.execCommand("copy")
+  }
+
+  const selectAll = () => {
     const textField = document.querySelector("textarea")
     if (textField) {
       textField.select()
@@ -78,7 +88,8 @@ const EncryptedConfigDialog = ({ payload, open, onClose }: DialogProps<ConfigVal
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleSelectAll} variant="contained">全選</Button>
+        <Button onClick={handleCopy} variant="contained" color="secondary">複製</Button>
+        <Button onClick={selectAll} variant="contained">全選</Button>
         <Button onClick={closeDialog}>收到</Button>
       </DialogActions>
     </Dialog>
