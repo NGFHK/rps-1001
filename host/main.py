@@ -18,6 +18,7 @@ def main():
         gameManager.startGame(players)
         return
 
+    print("Emulated game started.")
     gameManager.startEmulatedGame(args.numPlayers)
 
 

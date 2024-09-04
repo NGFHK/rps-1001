@@ -4,8 +4,8 @@ Result printing is pretty messy. Worth refactoring later.
 
 import math
 
-from .gameResult import GameResult
 from .player import Player
+from .fightDetails import GameResult
 
 USERNAME_COL_NAME = "Nick name"
 USER_ID_COL_NAME = "User ID"
@@ -17,7 +17,6 @@ USER_ID_COL_WIDTH = 8
 REPLY_ID_COL_WIDTH = len(
     REPLY_ID_COL_NAME
 )  # Column name is longer than the longest reply ID
-
 
 class Game:
     def __init__(self, players: list):
@@ -33,8 +32,8 @@ class Game:
         Game can always be started.
         The result is deterministic.
         """
-        
         # TODO: Refactor text printing to a separate class
+
         print("```md")
         print(f"有效報名人數： {len(self.players)}")
         print(f"自動首輪晉級人數： {self.numOfByePlayers}")
@@ -107,21 +106,15 @@ class Round:
             for i in range(0, len(self.players), 2)
         ]
         for playerA, playerB in pairs:
-            print(
-                f"**{playerA.genSelfAndFollowersNames()} 對 {playerB.genSelfAndFollowersNames()}**"
-            )
-            result = playerA.fightWith(playerB)
-
-            match result:
+            fightDetails = playerA.fightWith(playerB)
+            print(fightDetails)
+            match fightDetails.gameResult:
                 case GameResult.WIN:
                     promotingPlayers.append(playerA)
-                    print(f"{playerA.genSelfAndFollowersNames()} 勝")
                 case GameResult.LOSE:
                     promotingPlayers.append(playerB)
-                    print(f"{playerB.genSelfAndFollowersNames()} 勝")
                 case GameResult.DRAW:
                     playerA.addFollowers(playerB)
                     promotingPlayers.append(playerA)
-                    print(f"無限平手。{playerA.genSelfAndFollowersNames()} 同時晉級。")
 
         return promotingPlayers

@@ -1,4 +1,4 @@
-from .gameResult import GameResult
+from .fightDetails import *
 from .playerRpsConfig import PlayerRpsConfig, RepeatMode, RpsChoice, RpsResult
 
 
@@ -25,7 +25,7 @@ class Player:
         self.config = config
         self.followers = []
 
-    def fightWith(self, anotherPlayer) -> GameResult:
+    def fightWith(self, anotherPlayer) -> FightDetails:
         self.resetPatternIndexIfNeededOnFightStart()
         anotherPlayer.resetPatternIndexIfNeededOnFightStart()
 
@@ -33,24 +33,29 @@ class Player:
             len(self.config.pattern), len(anotherPlayer.config.pattern)
         )
 
-        battleLogStrings = []
+        battleRecords = []
+        gameResult = GameResult.DRAW
+
         for _ in range(longestPatternLen):
             selfPattern = self.useNextPattern()
             anotherPattern = anotherPlayer.useNextPattern()
 
-            log = f"{selfPattern}💥{anotherPattern}"
-            battleLogStrings.append(log)
+            battleRecords.append(BattleRecord(selfPattern, anotherPattern))
 
             result = selfPattern.beats(anotherPattern)
             if result == RpsResult.WIN:
-                print(" | ".join(battleLogStrings))
-                return GameResult.WIN
+                gameResult = GameResult.WIN
+                break
             elif result == RpsResult.LOSE:
-                print(" | ".join(battleLogStrings))
-                return GameResult.LOSE
+                gameResult = GameResult.LOSE
+                break
 
-        print(" | ".join(battleLogStrings))
-        return GameResult.DRAW
+        return FightDetails(
+            self.genSelfAndFollowersNames(),
+            anotherPlayer.genSelfAndFollowersNames(),
+            gameResult,
+            battleRecords,
+        )
 
     def useNextPattern(self) -> RpsChoice:
         nextPattern = self.config.pattern[self.nextPatternIndex]
@@ -62,6 +67,7 @@ class Player:
             self.nextPatternIndex = 0
 
     def addFollowers(self, player):
+        """add another player and its followers to this player's followers"""
         self.followers.append(player)
         self.followers += player.followers
 
