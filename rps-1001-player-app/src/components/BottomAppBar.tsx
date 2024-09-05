@@ -5,7 +5,7 @@ function BottomAppBar() {
     <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
       <Box display="flex" justifyContent="center" sx={{ p: .5 }}>
         <Typography>
-          本網站與LIHKG.com無關，所有觀點僅代表作者個人立場。
+          本網站與LIHKG.com無關，所有內容僅代表作者個人立場。
           🐻🐻🐻
         </Typography>
       </Box>
