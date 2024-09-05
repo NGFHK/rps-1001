@@ -9,7 +9,7 @@ from entities.player import Player
 from rpsConfigDecrpytor import RpsConfigDecrpytor
 
 BASE_URL = "https://lihkg.com/api_v2/thread"
-PRIVATE_KEY_PATH = "../keys/alpha_private.pem"
+PRIVATE_KEY_PATH = "../keys/20240905_private.pem"
 
 
 class LihkgParser:

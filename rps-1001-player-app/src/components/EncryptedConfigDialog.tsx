@@ -12,7 +12,7 @@ import {
 } from "@mui/material"
 import { DialogProps } from "@toolpad/core"
 import { useDialogs } from '@toolpad/core'
-import defaultPubString from "../assets/default_pub.txt?raw"
+import defaultPubString from "../assets/20240905_pub.txt?raw"
 import importRsaKey from "../utils/importRsaKey"
 import encryptPayload from "../utils/encryptToBase64"
 import { ConfigValues, FieldNames } from "./ConfigValues"
