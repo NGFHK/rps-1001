@@ -18,7 +18,9 @@ const SquigglyFilters = () => (
   </svg>
 )
 
-const SquigglyTypography = styled(Typography)<{ isAnimating: boolean }>(({ isAnimating }) => ({
+const SquigglyTypography = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'isAnimating',
+})<{ isAnimating: boolean }>(({ isAnimating }) => ({
   cursor: "default",
   animation: isAnimating ? `squiggly-anim 0.4s linear infinite` : "none",
   '@keyframes squiggly-anim': {
