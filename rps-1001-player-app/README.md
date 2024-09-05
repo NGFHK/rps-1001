@@ -22,8 +22,11 @@ Here is an example of how to generate a key pairs and apply them to the app.
 Run the following commands in the [keys](../keys/) directory.
 
 ```bash
-openssl genrsa > alpha_private.pem
-openssl rsa -in alpha_private.pem -pubout -out alpha_public.pem
+openssl genrsa -out private.pem 4096
+openssl rsa -in private.pem -pubout -out public.pem
 ```
 
-With this, copy the content of `alpha_public.pem` to the [default_pub.txt](./src/assets/default_pub.txt) file.
+Then, copy the content of `public.pem` to somewhere the [Client-side encryptor](../rps-1001-player-app/src/components/EncryptedConfigDialog.tsx) can access.
+
+Note that the byte size of the key pairs should be at least 4096 bits.
+Otherwise, the encryption might fail as the config size is too large.
